@@ -195,6 +195,9 @@ auto_update_data_source_matrix = [
     {"rhel9": {"template_os": "rhel9.0"}},
 ]
 
+RHEL9_PREFERENCE = f"rhel.9.{arch}" if arch in ["arm64", "s390x"] else "rhel.9"
+RHEL10_PREFERENCE = f"rhel.10.{arch}" if arch in ["arm64", "s390x"] else "rhel.10"
+
 data_import_cron_matrix = [
     {"centos-stream9": {"instance_type": U1_MEDIUM_STR, "preference": CENTOS_STREAM9_PREFERENCE}},
     {"centos-stream10": {"instance_type": U1_MEDIUM_STR, "preference": CENTOS_STREAM10_PREFERENCE}},
