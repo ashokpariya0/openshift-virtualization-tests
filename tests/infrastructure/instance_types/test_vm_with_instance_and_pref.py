@@ -31,6 +31,7 @@ if arch == "s390x":
     if "kvm" in CLOCK_TIMER:
         del CLOCK_TIMER["kvm"]
 
+
 @pytest.fixture()
 def instance_controller_revision(rhel_vm_with_instance_type_and_preference):
     return get_controller_revision(vm_instance=rhel_vm_with_instance_type_and_preference, ref_type="instancetype")

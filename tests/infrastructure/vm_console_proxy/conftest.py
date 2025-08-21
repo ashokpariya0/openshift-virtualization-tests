@@ -42,6 +42,7 @@ LOGGER = logging.getLogger(__name__)
 ARCH = get_cluster_architecture()
 PREFERENCE = f"rhel.10.{ARCH}" if ARCH in ["arm64", "s390x"] else "rhel.10"
 
+
 @pytest.fixture(scope="class")
 def enabled_vm_console_proxy_spec(hyperconverged_resource_scope_class):
     with ResourceEditorValidateHCOReconcile(

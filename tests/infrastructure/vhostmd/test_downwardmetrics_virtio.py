@@ -91,6 +91,7 @@ def parsed_metrics_command_data(vm):
         )[0]
     )
 
+
 def get_preference_name(rhel_version):
     """Generate a preference name for a given RHEL version, adjusted by architecture.
 
@@ -109,6 +110,7 @@ def get_preference_name(rhel_version):
     if rhel_version != "rhel8" and arch in ("s390x", "arm64"):
         preference_name += f".{arch}"
     return preference_name
+
 
 @pytest.fixture()
 def enabled_feature_gate_for_downward_metrics_scope_function(
