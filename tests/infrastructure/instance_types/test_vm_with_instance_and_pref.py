@@ -6,21 +6,37 @@ from tests.infrastructure.instance_types.utils import (
     assert_instance_revision_and_memory_update,
     get_controller_revision,
 )
-from utilities.constants import Images
+from utilities.architecture import get_cluster_architecture
+from utilities.constants import Images, S390X
 from utilities.virt import VirtualMachineForTests, running_vm
 
 pytestmark = [pytest.mark.post_upgrade, pytest.mark.sno, pytest.mark.gating]
 
 CLOCK_TIMEZONE = "America/New_York"
 CLOCK_UTC_OFFSET = 600
-CLOCK_TIMER = {
-    "hpet": {"present": False},
-    "hyperv": {"present": True},
-    "kvm": {"present": True},
-    "pit": {"present": True, "tickPolicy": "delay"},
-    "rtc": {"present": True, "tickPolicy": "catchup", "track": "guest"},
-}
 
+
+def get_clock_timer_config():
+    """
+    Returns the CLOCK_TIMER configuration based on the cluster architecture.
+    For s390x, disables hyperv and removes kvm from the configuration.
+    """
+    clock_timer = {
+        "hpet": {"present": False},
+        "hyperv": {"present": True},
+        "kvm": {"present": True},
+        "pit": {"present": True, "tickPolicy": "delay"},
+        "rtc": {"present": True, "tickPolicy": "catchup", "track": "guest"},
+    }
+
+    if get_cluster_architecture() == S390X:
+        clock_timer["hyperv"]["present"] = False
+        if "kvm" in clock_timer:
+            del clock_timer["kvm"]
+
+    return clock_timer
+
+CLOCK_TIMER = get_clock_timer_config()
 
 @pytest.fixture()
 def instance_controller_revision(rhel_vm_with_instance_type_and_preference):
