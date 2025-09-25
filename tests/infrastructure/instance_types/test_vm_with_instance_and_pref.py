@@ -7,7 +7,7 @@ from tests.infrastructure.instance_types.utils import (
     get_controller_revision,
 )
 from utilities.architecture import get_cluster_architecture
-from utilities.constants import Images, S390X
+from utilities.constants import S390X, Images
 from utilities.virt import VirtualMachineForTests, running_vm
 
 pytestmark = [pytest.mark.post_upgrade, pytest.mark.sno, pytest.mark.gating]
@@ -36,7 +36,9 @@ def get_clock_timer_config():
 
     return clock_timer
 
+
 CLOCK_TIMER = get_clock_timer_config()
+
 
 @pytest.fixture()
 def instance_controller_revision(rhel_vm_with_instance_type_and_preference):

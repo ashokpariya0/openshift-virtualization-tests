@@ -112,6 +112,7 @@ def preference_name(rhel_version):
         preference_name += f".{arch}"
     return preference_name
 
+
 @pytest.fixture()
 def enabled_feature_gate_for_downward_metrics_scope_function(
     hyperconverged_resource_scope_function,
